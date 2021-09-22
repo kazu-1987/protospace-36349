@@ -1,9 +1,7 @@
 class PrototypesController < ApplicationController
-  protect_from_forgery with: :null_session
-  before_action :move_to_index, except: [:index, :show]
-  
-  
-  
+  before_action :authenticate_user!, only: [:new, :edit, :destroy]
+  before_action :move_to_index, only: [:edit, :update, :destroy]
+
   def index
     @prototype = Prototype.all
   end
@@ -57,25 +55,8 @@ class PrototypesController < ApplicationController
   end
 
   def move_to_index
-    unless user_signed_in?
-      redirect_to action: :index
-    end
-  end
-
-  def move_to_edit
-    unless user_signed_in?
-      redirect_to action: :index
-    end
-  end
-
-  def move_to_update
-    unless user_signed_in?
-      redirect_to action: :index
-    end
-  end
-
-  def move_to_destroy
-    unless user_signed_in?
+    prototype = Prototype.find(params[:id])
+    if prototype.user_id != current_user.id
       redirect_to action: :index
     end
   end
