@@ -24,6 +24,6 @@
 
 | Column               | Type       | Options     |
 | -------------------- | -----------| ----------- |
-| text                 | text       | null: false |
+| content              | text       |             |
 | user                 | references |             |
 | prototype            | references |             |
